@@ -13,4 +13,8 @@ functinality to add:
 
 4. make sure the slide is at the top of the page.
 
-5. Improve the over all looks of the page.
+5. Improve the over all looks of the page 
+
+6. Load pictures array into the slide show instead of adding them to the UI.
+
+7. Dynamically fetch more photos for more authors.
