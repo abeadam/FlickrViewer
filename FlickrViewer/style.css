@@ -1,0 +1,8 @@
+.slideshowBody img {
+	position: absolute;
+}
+
+.slideshowBody {
+	width: 600px;
+	height: 600px;
+}
