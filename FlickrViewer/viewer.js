@@ -23,11 +23,13 @@ YUI({gallery: 'gallery-2011.04.20-13-04'}).add('viewer', function(Y){
 	function _nextPhoto () {
 		console.log('next photo');
 		this._slideShow.next();
+		this._fireChanged();
 	}
 
 	function _previousPhoto () {
 		console.log('previousPhoto');
 		this._slideShow.previous();
+		this._fireChanged();
 	}
 
 	Y.extend(ImageWidget, Y.Plugin.Base, {
@@ -47,6 +49,9 @@ YUI({gallery: 'gallery-2011.04.20-13-04'}).add('viewer', function(Y){
 			// lets add listeners
 			this.afterHostEvent('nextPhoto', _nextPhoto, this);
 			this.afterHostEvent('previousPhoto', _previousPhoto, this);
+		},
+		_fireChanged: function (photoInfo) {
+			this.get('host').fire('updateTitle');
 		},
 		destructor : function () {
 			// incase we need to remove event listeners.

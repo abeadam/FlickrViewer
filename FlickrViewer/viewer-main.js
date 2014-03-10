@@ -31,31 +31,34 @@ YUI().use('event', 'template-base', 'handlebars', 'panel', 'viewer', 'viewer-net
 			title = '',
 			body,
 			panel = new Y.Panel({
-			srcNode: '#container',
-			width: 1000,
-			model: true,
-			centered: true,
-			buttons: [
-				{
-					value: 'Next',
-					section: Y.WidgetStdMod.FOOTER,
-					action : function (e) {
-						e.halt();
-						body.fire('nextPhoto');
-						console.log('next photo');
+				srcNode: '#container',
+				width: 1000,
+				model: true,
+				centered: true,
+				buttons: [
+					{
+						value: 'Next',
+						section: Y.WidgetStdMod.FOOTER,
+						action : 'onNext'
+					},
+					{
+						value: 'Previous',
+						section: Y.WidgetStdMod.FOOTER,
+						action : 'onPrevious'
 					}
-				},
-				{
-					value: 'Previous',
-					section: Y.WidgetStdMod.FOOTER,
-					action : function (e) {
-						e.halt();
-						body.fire('previousPhoto');
-						console.log('previousPhoto');
-					}
-				}
-			] 
+				] 
+			});
+		panel.on('updateTitle', function (photoInfo) {
+			console.log('Updating Photo Info');
 		});
+		panel.onNext = function (e){
+			e.halt();
+			body.fire('nextPhoto');
+		};
+		panel.onPrevious = function (e){
+			e.halt();
+			body.fire('previousPhoto');
+		};
 
 		// first make requests to get the photos we will show to the user
 		Y.ViewerNet.getImages(testId, {
@@ -73,6 +76,13 @@ YUI().use('event', 'template-base', 'handlebars', 'panel', 'viewer', 'viewer-net
 				panel.render();
 				body = panel.getStdModNode(Y.WidgetStdMod.BODY, true);
 				body.addClass('slideshowBody');
+				// make sure the body will forward the event to the panel
+				Y.augment(body, Y.EventTarget);
+				body.addTarget(panel);
+				body.on('updateTitle', function () {
+					console.log('testing change');
+				});
+
 				body.plug(Y.ImageWidget.slideshow, {photos: photos});
 				
 			}, failure: function() {
