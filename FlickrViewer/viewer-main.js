@@ -37,20 +37,17 @@ YUI().use('event', 'template-base', 'handlebars', 'panel', 'viewer', 'viewer-net
 				centered: true,
 				buttons: [
 					{
-						value: 'Next',
-						section: Y.WidgetStdMod.FOOTER,
-						action : 'onNext'
-					},
-					{
 						value: 'Previous',
 						section: Y.WidgetStdMod.FOOTER,
 						action : 'onPrevious'
+					},
+					{
+						value: 'Next',
+						section: Y.WidgetStdMod.FOOTER,
+						action : 'onNext'
 					}
 				] 
 			});
-		panel.on('updateTitle', function (photoInfo) {
-			console.log('Updating Photo Info');
-		});
 		panel.onNext = function (e){
 			e.halt();
 			body.fire('nextPhoto');
@@ -76,11 +73,9 @@ YUI().use('event', 'template-base', 'handlebars', 'panel', 'viewer', 'viewer-net
 				panel.render();
 				body = panel.getStdModNode(Y.WidgetStdMod.BODY, true);
 				body.addClass('slideshowBody');
-				// make sure the body will forward the event to the panel
-				Y.augment(body, Y.EventTarget);
-				body.addTarget(panel);
-				body.on('updateTitle', function () {
-					console.log('testing change');
+				body.on('updateTitle', function (photoInfo) {
+					console.log('Updating Title');
+					panel.setStdModContent(Y.WidgetStdMod.HEADER, handlebars.render(html, photoInfo))
 				});
 
 				body.plug(Y.ImageWidget.slideshow, {photos: photos});
