@@ -34,7 +34,8 @@ YUI().use('event', 'template-base', 'handlebars', 'panel', 'viewer', 'viewer-net
 				srcNode: '#container',
 				width: 1000,
 				model: true,
-				centered: true,
+				centered: false,
+				align: {node: null,  points:[Y.WidgetPositionAlign.TC, Y.WidgetPositionAlign.TC]},
 				buttons: [
 					{
 						value: 'Previous',
@@ -56,6 +57,7 @@ YUI().use('event', 'template-base', 'handlebars', 'panel', 'viewer', 'viewer-net
 			e.halt();
 			body.fire('previousPhoto');
 		};
+
 
 		// first make requests to get the photos we will show to the user
 		Y.ViewerNet.getImages(testId, {
