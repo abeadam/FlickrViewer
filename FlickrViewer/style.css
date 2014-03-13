@@ -6,3 +6,12 @@
 	width: 600px;
 	height: 600px;
 }
+
+.initialLoad button {
+	width: 200px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-left: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
